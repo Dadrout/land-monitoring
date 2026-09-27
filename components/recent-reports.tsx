@@ -10,7 +10,15 @@ export function RecentReports({ reports, onSelect }: { reports: CitizenReport[];
       <div className="space-y-2">
         {reports.slice(0, 6).map((report) => (
           <button key={report.id} onClick={() => onSelect(report)} className="w-full rounded-xl border border-slate-100 p-3 text-left transition hover:border-slate-200 hover:bg-slate-50">
-            <div className="flex items-start justify-between gap-3"><div><div className="text-sm font-semibold text-slate-800">{report.category}</div><div className="mt-1 max-w-[240px] truncate text-xs text-slate-500">{report.description}</div></div><ReportStatusPill status={report.status} /></div>
+            <div className="flex items-start gap-3">
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-semibold text-slate-800 truncate">{report.category}</div>
+                <div className="mt-1 w-full truncate text-xs text-slate-500">{report.description}</div>
+              </div>
+              <div className="shrink-0 text-right">
+                <ReportStatusPill status={report.status} />
+              </div>
+            </div>
           </button>
         ))}
       </div>
