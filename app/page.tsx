@@ -1,5 +1,7 @@
 "use client";
 
+import { Send } from "lucide-react";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Shell } from "@/components/shell";
 import { Stats } from "@/components/stats";
@@ -40,7 +42,20 @@ export default function DashboardPage() {
         <Stats stats={stats} />
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
           <InspectorMap plots={plots} reports={reports} onSelectReport={setSelected} />
-          <div className="space-y-5"><RecentReports reports={reports} onSelect={setSelected} /></div>
+          <div className="space-y-5">
+            <div className="flex items-center gap-4 rounded-2xl bg-blue-50 p-5 border border-blue-100">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-blue-500 text-white shadow-sm">
+                <Send size={20} className="-ml-0.5" />
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-blue-950">Тестирование бота</div>
+                <div className="mt-1 text-xs text-blue-800">
+                  Отправьте сигнал через <a href="https://t.me/JerMonitor_Bot" target="_blank" rel="noreferrer" className="font-bold underline hover:text-blue-600">@JerMonitor_Bot</a>
+                </div>
+              </div>
+            </div>
+            <RecentReports reports={reports} onSelect={setSelected} />
+          </div>
         </div>
       </main>
       <ReportDrawer report={selected} onClose={() => setSelected(null)} onUpdated={updated} />
