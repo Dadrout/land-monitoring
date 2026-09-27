@@ -14,6 +14,7 @@ export function ReportDrawer({ report, onClose, onUpdated }: { report: CitizenRe
   if (!report) return null;
 
   async function update(status: ReportStatus) {
+    if (!report) return;
     setBusy(true);
     try {
       const response = await fetch(`/api/reports/${report.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ status, deadline: ["violation", "in_progress"].includes(status) ? deadline : status === "resolved" ? null : report.deadline }) });
