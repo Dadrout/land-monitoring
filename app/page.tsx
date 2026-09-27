@@ -6,7 +6,6 @@ import { Stats } from "@/components/stats";
 import { InspectorMap } from "@/components/map";
 import { RecentReports } from "@/components/recent-reports";
 import { ReportDrawer } from "@/components/report-drawer";
-import { DemoCitizen } from "@/components/demo-citizen";
 import type { CitizenReport, DashboardStats, LandPlot } from "@/lib/types";
 
 export default function DashboardPage() {
@@ -30,12 +29,6 @@ export default function DashboardPage() {
     overdue: plots.filter((p) => p.deadline && new Date(p.deadline) < new Date() && !["resolved", "returned", "normal"].includes(p.status)).length,
   }), [plots]);
 
-  function created(report: CitizenReport) {
-    setReports((prev) => [report, ...prev]);
-    setNotice("Новый сигнал получен — точка появилась на карте");
-    setTimeout(() => setNotice(null), 3500);
-    load();
-  }
   function updated(report: CitizenReport) {
     setReports((prev) => prev.map((item) => item.id === report.id ? report : item)); setSelected(report); load();
   }
@@ -47,7 +40,7 @@ export default function DashboardPage() {
         <Stats stats={stats} />
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
           <InspectorMap plots={plots} reports={reports} onSelectReport={setSelected} />
-          <div className="space-y-5"><DemoCitizen plots={plots} onCreated={created} /><RecentReports reports={reports} onSelect={setSelected} /></div>
+          <div className="space-y-5"><RecentReports reports={reports} onSelect={setSelected} /></div>
         </div>
       </main>
       <ReportDrawer report={selected} onClose={() => setSelected(null)} onUpdated={updated} />
